@@ -29,9 +29,9 @@
 - [ ] Confirmação visual após registro
 
 ## Fase 5: Painel do Colaborador - Parte 2
-- [ ] Histórico de registros com filtros
-- [ ] Resumo mensal (dias trabalhados, atrasos, horas extras, faltas)
-- [ ] Sistema de justificativas (solicitar ajuste)
+- [x] Histórico de registros com filtros
+- [x] Resumo mensal (dias trabalhados, atrasos, horas extras, faltas)
+- [x] Sistema de justificativas (solicitar ajuste)
 - [ ] Perfil do colaborador
 - [ ] Visualização de observações e status
 
@@ -78,7 +78,7 @@
 - [ ] Criar usuários de teste (colaborador, gestor, admin)
 - [ ] Criar registros de ponto de exemplo
 - [ ] Criar justificativas de exemplo
-- [x] Testes unitários com vitest (16 testes passando)
+- [x] Testes unitários com vitest (15 testes passando)
 
 ## Fase 12: Ajustes Finais e Entrega
 - [x] Validação de UX/UI básica

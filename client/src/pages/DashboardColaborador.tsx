@@ -7,6 +7,10 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import RegistroPonto from "@/components/RegistroPonto";
+import HistoricoRegistros from "@/components/HistoricoRegistros";
+import ResumoMensal from "@/components/ResumoMensal";
+import Justificativas from "@/components/Justificativas";
 
 export default function DashboardColaborador() {
   const { user, logout } = useAuth();
@@ -112,7 +116,16 @@ export default function DashboardColaborador() {
               <TabsTrigger value="resumo">Resumo</TabsTrigger>
             </TabsList>
 
+            {/* Justificativas Tab */}
+            <TabsList className="grid w-full max-w-md grid-cols-4 mt-2">
+              <TabsTrigger value="justificativas">Justificativas</TabsTrigger>
+            </TabsList>
+
             {/* Overview Tab */}
+            <TabsContent value="justificativas" className="mt-6">
+              <Justificativas />
+            </TabsContent>
+
             <TabsContent value="overview" className="space-y-6 mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Card>
@@ -190,16 +203,24 @@ export default function DashboardColaborador() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <Button className="bg-green-600 hover:bg-green-700">
+                    <Button className="bg-green-600 hover:bg-green-700" onClick={() => {
+                      toast.info("Clique em 'Registrar' para fazer seu registro");
+                    }}>
                       ✓ Entrada
                     </Button>
-                    <Button className="bg-orange-600 hover:bg-orange-700">
+                    <Button className="bg-orange-600 hover:bg-orange-700" onClick={() => {
+                      toast.info("Clique em 'Registrar' para fazer seu registro");
+                    }}>
                       ⏸ Intervalo
                     </Button>
-                    <Button className="bg-blue-600 hover:bg-blue-700">
+                    <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => {
+                      toast.info("Clique em 'Registrar' para fazer seu registro");
+                    }}>
                       ▶ Retorno
                     </Button>
-                    <Button className="bg-red-600 hover:bg-red-700">
+                    <Button className="bg-red-600 hover:bg-red-700" onClick={() => {
+                      toast.info("Clique em 'Registrar' para fazer seu registro");
+                    }}>
                       ✕ Saída
                     </Button>
                   </div>
@@ -209,53 +230,18 @@ export default function DashboardColaborador() {
 
             {/* Registro Tab */}
             <TabsContent value="registro" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Registrar Ponto</CardTitle>
-                  <CardDescription>
-                    Selecione o tipo de registro
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Funcionalidade de registro será implementada
-                  </p>
-                </CardContent>
-              </Card>
+              <RegistroPonto />
             </TabsContent>
 
             {/* Histórico Tab */}
             <TabsContent value="historico" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Histórico de Registros</CardTitle>
-                  <CardDescription>
-                    Seus registros de ponto
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Nenhum registro encontrado
-                  </p>
-                </CardContent>
-              </Card>
+              <HistoricoRegistros />
             </TabsContent>
 
             {/* Resumo Tab */}
-            <TabsContent value="resumo" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Resumo Mensal</CardTitle>
-                  <CardDescription>
-                    Estatísticas do mês
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Resumo mensal será exibido aqui
-                  </p>
-                </CardContent>
-              </Card>
+            <TabsContent value="resumo" className="mt-6 space-y-6">
+              <ResumoMensal />
+              <Justificativas />
             </TabsContent>
           </Tabs>
         </main>
