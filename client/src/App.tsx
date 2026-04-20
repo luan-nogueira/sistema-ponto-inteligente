@@ -4,32 +4,54 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import Login from "./pages/Login";
+import DashboardColaborador from "./pages/DashboardColaborador";
+import DashboardGestor from "./pages/DashboardGestor";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./_core/hooks/useAuth";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
+  const { isAuthenticated, user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/login" component={Login} />
+      <Route path="/404" component={NotFound} />
+      
+      {/* Rotas protegidas por role */}
+      <Route path="/">
+        {isAuthenticated && user ? (
+          user.role === "colaborador" ? (
+            <DashboardColaborador />
+          ) : (
+            <DashboardGestor />
+          )
+        ) : (
+          <Login />
+        )}
+      </Route>
+
+      <Route path="/colaborador/*" component={DashboardColaborador} />
+      <Route path="/gestor/*" component={DashboardGestor} />
+      
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light" switchable>
         <TooltipProvider>
           <Toaster />
           <Router />
