@@ -10,6 +10,9 @@ import { toast } from "sonner";
 import GestaoColaboradores from "@/components/GestaoColaboradores";
 import JustificativasPendentes from "@/components/JustificativasPendentes";
 import RegistrosTempoReal from "@/components/RegistrosTempoReal";
+import MapaLocalizacao from "@/components/MapaLocalizacao";
+import Relatorios from "@/components/Relatorios";
+import ConfiguracaoEmpresa from "@/components/ConfiguracaoEmpresa";
 
 export default function DashboardGestor() {
   const { user, logout } = useAuth();
@@ -222,19 +225,16 @@ export default function DashboardGestor() {
 
             {/* Relatórios Tab */}
             <TabsContent value="relatorios" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Relatórios</CardTitle>
-                  <CardDescription>
-                    Gere relatórios de ponto
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Funcionalidade de relatórios será implementada
-                  </p>
-                </CardContent>
-              </Card>
+              <Relatorios />
+            </TabsContent>
+            {/* Mapa Tab */}
+            <TabsContent value="mapa" className="mt-6">
+              <MapaLocalizacao />
+            </TabsContent>
+
+            {/* Configurações Tab */}
+            <TabsContent value="configuracoes" className="mt-6">
+              <ConfiguracaoEmpresa />
             </TabsContent>
           </Tabs>
         </main>

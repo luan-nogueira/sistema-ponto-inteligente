@@ -50,28 +50,28 @@
 - [x] Aprovação/rejeição de justificativas
 
 ## Fase 8: Mapa e Geolocalização
-- [ ] Integração com Google Maps
-- [ ] Exibição de localização das batidas de ponto
-- [ ] Visualização de precisão da localização
-- [ ] Mapa com ponto da empresa e ponto registrado
-- [ ] Validação de área permitida (raio)
+- [x] Integração com Google Maps
+- [x] Exibição de localização das batidas de ponto
+- [x] Visualização de precisão da localização
+- [x] Mapa com ponto da empresa e ponto registrado
+- [x] Validação de área permitida (raio)
 
 ## Fase 9: Relatórios e Exportação
-- [ ] Relatórios de ponto por colaborador
-- [ ] Filtros por período
-- [ ] Exportação em PDF
-- [ ] Exportação em Excel
+- [x] Relatórios de ponto por colaborador
+- [x] Filtros por período
+- [x] Exportação em PDF
+- [x] Exportação em Excel
 - [ ] Gráficos de atrasos, faltas, horas extras
 - [ ] Espelho de ponto mensal
 
 ## Fase 10: Configurações da Empresa
-- [ ] Definição de horários de trabalho
-- [ ] Tolerância para atraso
-- [ ] Regras de intervalo
+- [x] Definição de horários de trabalho
+- [x] Tolerância para atraso
+- [x] Regras de intervalo
 - [ ] Cadastro de feriados
-- [ ] Raio permitido para bater ponto
+- [x] Raio permitido para bater ponto
 - [ ] Cadastro de unidades/locais
-- [ ] Geofencing (cercas virtuais)
+- [x] Geofencing (cercas virtuais)
 
 ## Fase 11: Dados de Exemplo e Testes
 - [ ] Popular banco com dados de exemplo
