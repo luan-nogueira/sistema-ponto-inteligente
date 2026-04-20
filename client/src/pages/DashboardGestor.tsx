@@ -7,6 +7,9 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import GestaoColaboradores from "@/components/GestaoColaboradores";
+import JustificativasPendentes from "@/components/JustificativasPendentes";
+import RegistrosTempoReal from "@/components/RegistrosTempoReal";
 
 export default function DashboardGestor() {
   const { user, logout } = useAuth();
@@ -204,53 +207,17 @@ export default function DashboardGestor() {
 
             {/* Colaboradores Tab */}
             <TabsContent value="colaboradores" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Gestão de Colaboradores</CardTitle>
-                  <CardDescription>
-                    Visualize e gerencie todos os colaboradores
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Nenhum colaborador cadastrado
-                  </p>
-                </CardContent>
-              </Card>
+              <GestaoColaboradores />
             </TabsContent>
 
             {/* Registros Tab */}
             <TabsContent value="registros" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Registros em Tempo Real</CardTitle>
-                  <CardDescription>
-                    Acompanhe os registros de ponto
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Nenhum registro encontrado
-                  </p>
-                </CardContent>
-              </Card>
+              <RegistrosTempoReal />
             </TabsContent>
 
             {/* Justificativas Tab */}
             <TabsContent value="justificativas" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Justificativas Pendentes</CardTitle>
-                  <CardDescription>
-                    Aprove ou rejeite solicitações
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Nenhuma justificativa pendente
-                  </p>
-                </CardContent>
-              </Card>
+              <JustificativasPendentes />
             </TabsContent>
 
             {/* Relatórios Tab */}

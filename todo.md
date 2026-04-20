@@ -36,18 +36,18 @@
 - [ ] Visualização de observações e status
 
 ## Fase 6: Painel do Gestor - Parte 1
-- [ ] Dashboard administrativo com métricas gerais
-- [ ] Listagem de colaboradores com status em tempo real
-- [ ] Filtros (nome, setor, cargo, status)
-- [ ] Indicadores visuais de presença/ausência/atraso
-- [ ] Busca e paginação
+- [x] Dashboard administrativo com métricas gerais
+- [x] Listagem de colaboradores com status em tempo real
+- [x] Filtros (nome, setor, cargo, status)
+- [x] Indicadores visuais de presença/ausência/atraso
+- [x] Busca e paginação
 
 ## Fase 7: Painel do Gestor - Parte 2
 - [ ] Gestão de colaboradores (criar, editar, bloquear, excluir)
 - [ ] Definição de cargo, setor, jornada e escala
-- [ ] Visualização de registros em tempo real
-- [ ] Detalhes de cada registro (colaborador, horário, tipo, localização)
-- [ ] Aprovação/rejeição de justificativas
+- [x] Visualização de registros em tempo real
+- [x] Detalhes de cada registro (colaborador, horário, tipo, localização)
+- [x] Aprovação/rejeição de justificativas
 
 ## Fase 8: Mapa e Geolocalização
 - [ ] Integração com Google Maps
