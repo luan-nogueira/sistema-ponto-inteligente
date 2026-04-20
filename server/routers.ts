@@ -208,6 +208,14 @@ export const appRouter = router({
         const { id, ...data } = input;
         return await db.updatePontoRegistro(id, data as any);
       }),
+
+    getRegistrosRecentes: gestorProcedure.query(async () => {
+      return await db.getRegistrosRecentes();
+    }),
+
+    getRegistrosComLocalizacao: gestorProcedure.query(async () => {
+      return await db.getRegistrosComLocalizacao();
+    }),
   }),
 
   // ==================== JUSTIFICATIVAS ====================
@@ -279,6 +287,30 @@ export const appRouter = router({
     get: protectedProcedure.query(async () => {
       return await db.getConfiguracao();
     }),
+
+    getEmpresa: protectedProcedure.query(async () => {
+      return await db.getConfiguracao();
+    }),
+
+    atualizar: adminProcedure
+      .input(
+        z.object({
+          horaEntrada: z.string().optional(),
+          horaSaida: z.string().optional(),
+          toleranciaAtraso: z.number().optional(),
+          intervaloMinutos: z.number().optional(),
+          raioGeofencing: z.number().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const data: any = {};
+        if (input.horaEntrada) data.horaEntrada = input.horaEntrada;
+        if (input.horaSaida) data.horaSaida = input.horaSaida;
+        if (input.toleranciaAtraso !== undefined) data.toleranciaAtrasominutos = input.toleranciaAtraso;
+        if (input.intervaloMinutos !== undefined) data.duracaoIntervaloMinutos = input.intervaloMinutos;
+        if (input.raioGeofencing !== undefined) data.raioPermitidoMetros = input.raioGeofencing;
+        return await db.updateConfiguracao(data);
+      }),
 
     update: adminProcedure
       .input(
