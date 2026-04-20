@@ -153,3 +153,5 @@ export function MapView({
     <div ref={mapContainer} className={cn("w-full h-[500px]", className)} />
   );
 }
+
+export default MapView;
