@@ -17,6 +17,7 @@ import ConfiguracaoEmpresa from "@/components/ConfiguracaoEmpresa";
 export default function DashboardGestor() {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
   const [, setLocation] = useLocation();
   const logoutMutation = trpc.auth.logout.useMutation();
 
@@ -28,6 +29,15 @@ export default function DashboardGestor() {
     } catch (error) {
       toast.error("Erro ao fazer logout");
     }
+  };
+
+  const handleNavClick = (tab: string) => {
+    setActiveTab(tab);
+    setSidebarOpen(false);
+  };
+
+  const handleQuickAction = (tab: string) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -54,13 +64,48 @@ export default function DashboardGestor() {
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-2">
-            <NavItem icon="📊" label="Dashboard" active />
-            <NavItem icon="👥" label="Colaboradores" />
-            <NavItem icon="📍" label="Registros em Tempo Real" />
-            <NavItem icon="📋" label="Justificativas" />
-            <NavItem icon="📈" label="Relatórios" />
-            <NavItem icon="🗺️" label="Mapa de Localização" />
-            <NavItem icon="⚙️" label="Configurações" />
+            <NavItem 
+              icon="📊" 
+              label="Dashboard" 
+              active={activeTab === "overview"}
+              onClick={() => handleNavClick("overview")}
+            />
+            <NavItem 
+              icon="👥" 
+              label="Colaboradores"
+              active={activeTab === "colaboradores"}
+              onClick={() => handleNavClick("colaboradores")}
+            />
+            <NavItem 
+              icon="📍" 
+              label="Registros em Tempo Real"
+              active={activeTab === "registros"}
+              onClick={() => handleNavClick("registros")}
+            />
+            <NavItem 
+              icon="📋" 
+              label="Justificativas"
+              active={activeTab === "justificativas"}
+              onClick={() => handleNavClick("justificativas")}
+            />
+            <NavItem 
+              icon="📈" 
+              label="Relatórios"
+              active={activeTab === "relatorios"}
+              onClick={() => handleNavClick("relatorios")}
+            />
+            <NavItem 
+              icon="🗺️" 
+              label="Mapa de Localização"
+              active={activeTab === "mapa"}
+              onClick={() => handleNavClick("mapa")}
+            />
+            <NavItem 
+              icon="⚙️" 
+              label="Configurações"
+              active={activeTab === "configuracoes"}
+              onClick={() => handleNavClick("configuracoes")}
+            />
           </nav>
 
           {/* Footer */}
@@ -111,17 +156,9 @@ export default function DashboardGestor() {
 
         {/* Content */}
         <main className="flex-1 overflow-auto p-6">
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full max-w-md grid-cols-5">
-              <TabsTrigger value="overview">Visão Geral</TabsTrigger>
-              <TabsTrigger value="colaboradores">Equipe</TabsTrigger>
-              <TabsTrigger value="registros">Registros</TabsTrigger>
-              <TabsTrigger value="justificativas">Justificativas</TabsTrigger>
-              <TabsTrigger value="relatorios">Relatórios</TabsTrigger>
-            </TabsList>
-
-            {/* Overview Tab */}
-            <TabsContent value="overview" className="space-y-6 mt-6">
+          {/* Overview Tab */}
+          {activeTab === "overview" && (
+            <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <Card>
                   <CardHeader className="pb-3">
@@ -191,62 +228,86 @@ export default function DashboardGestor() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <Button className="bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700"
+                      onClick={() => handleQuickAction("colaboradores")}
+                    >
                       👥 Colaboradores
                     </Button>
-                    <Button className="bg-green-600 hover:bg-green-700">
+                    <Button 
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={() => handleQuickAction("registros")}
+                    >
                       📋 Registros
                     </Button>
-                    <Button className="bg-orange-600 hover:bg-orange-700">
+                    <Button 
+                      className="bg-orange-600 hover:bg-orange-700"
+                      onClick={() => handleQuickAction("justificativas")}
+                    >
                       ✋ Justificativas
                     </Button>
-                    <Button className="bg-purple-600 hover:bg-purple-700">
+                    <Button 
+                      className="bg-purple-600 hover:bg-purple-700"
+                      onClick={() => handleQuickAction("relatorios")}
+                    >
                       📈 Relatórios
                     </Button>
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </div>
+          )}
 
-            {/* Colaboradores Tab */}
-            <TabsContent value="colaboradores" className="mt-6">
-              <GestaoColaboradores />
-            </TabsContent>
+          {/* Colaboradores Tab */}
+          {activeTab === "colaboradores" && (
+            <GestaoColaboradores />
+          )}
 
-            {/* Registros Tab */}
-            <TabsContent value="registros" className="mt-6">
-              <RegistrosTempoReal />
-            </TabsContent>
+          {/* Registros Tab */}
+          {activeTab === "registros" && (
+            <RegistrosTempoReal />
+          )}
 
-            {/* Justificativas Tab */}
-            <TabsContent value="justificativas" className="mt-6">
-              <JustificativasPendentes />
-            </TabsContent>
+          {/* Justificativas Tab */}
+          {activeTab === "justificativas" && (
+            <JustificativasPendentes />
+          )}
 
-            {/* Relatórios Tab */}
-            <TabsContent value="relatorios" className="mt-6">
-              <Relatorios />
-            </TabsContent>
-            {/* Mapa Tab */}
-            <TabsContent value="mapa" className="mt-6">
-              <MapaLocalizacao />
-            </TabsContent>
+          {/* Relatórios Tab */}
+          {activeTab === "relatorios" && (
+            <Relatorios />
+          )}
 
-            {/* Configurações Tab */}
-            <TabsContent value="configuracoes" className="mt-6">
-              <ConfiguracaoEmpresa />
-            </TabsContent>
-          </Tabs>
+          {/* Mapa Tab */}
+          {activeTab === "mapa" && (
+            <MapaLocalizacao />
+          )}
+
+          {/* Configurações Tab */}
+          {activeTab === "configuracoes" && (
+            <ConfiguracaoEmpresa />
+          )}
         </main>
       </div>
     </div>
   );
 }
 
-function NavItem({ icon, label, active = false }: { icon: string; label: string; active?: boolean }) {
+function NavItem({ 
+  icon, 
+  label, 
+  active = false,
+  onClick
+}: { 
+  icon: string; 
+  label: string; 
+  active?: boolean;
+  onClick?: () => void;
+}) {
   return (
     <button
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+      onClick={onClick}
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer ${
         active
           ? "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 font-semibold"
           : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
