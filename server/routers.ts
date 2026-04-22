@@ -99,6 +99,55 @@ export const appRouter = router({
     delete: adminProcedure.input(z.number()).mutation(async ({ input }) => {
       return await db.updateUser(input, { ativo: false });
     }),
+
+    addColaborador: gestorProcedure
+      .input(
+        z.object({
+          name: z.string().min(1),
+          email: z.string().email(),
+          cargo: z.string().optional(),
+          setor: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const openId = `colaborador_${Date.now()}_${Math.random()}`;
+        return await db.upsertUser({
+          openId,
+          name: input.name,
+          email: input.email,
+          cargo: input.cargo,
+          setor: input.setor,
+          role: "colaborador" as any,
+        });
+      }),
+
+    updateColaborador: gestorProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string().optional(),
+          cargo: z.string().optional(),
+          setor: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        return await db.updateUser(id, data as any);
+      }),
+
+    toggleBloqueio: gestorProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        const user = await db.getUserById(input);
+        if (!user) throw new TRPCError({ code: "NOT_FOUND" });
+        return await db.updateUser(input, { ativo: !user.ativo });
+      }),
+
+    removeColaborador: gestorProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        return await db.updateUser(input, { ativo: false });
+      }),
   }),
 
   // ==================== PONTO ====================
