@@ -7,7 +7,7 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import GestaoColaboradores from "@/components/GestaoColaboradores";
+import GestaoColaboradoresFirebase from "@/components/GestaoColaboradoresFirebase";
 import JustificativasPendentes from "@/components/JustificativasPendentes";
 import RegistrosTempoReal from "@/components/RegistrosTempoReal";
 import MapaLocalizacao from "@/components/MapaLocalizacao";
@@ -260,7 +260,7 @@ export default function DashboardGestor() {
 
           {/* Colaboradores Tab */}
           {activeTab === "colaboradores" && (
-            <GestaoColaboradores />
+            <GestaoColaboradoresFirebase />
           )}
 
           {/* Registros Tab */}

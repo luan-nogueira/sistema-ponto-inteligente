@@ -88,3 +88,29 @@
 - [x] Otimizações de performance (lazy loading, auto-refresh)
 - [x] Documentação de uso (componentes comentados)
 - [x] Checkpoint final e entrega
+
+## Fase 13: Integração Firebase - Gestão de Colaboradores
+
+### Backend
+- [x] Instalar firebase-admin SDK
+- [x] Configurar credenciais do Firebase
+- [ ] Criar procedures tRPC para gestão de colaboradores
+- [ ] Implementar função de adicionar colaborador
+- [ ] Implementar função de remover colaborador
+- [ ] Implementar função de bloquear/desbloquear colaborador
+- [ ] Implementar função de listar colaboradores com status
+
+### Frontend
+- [x] Instalar firebase SDK
+- [x] Criar componente de adicao de colaborador
+- [x] Criar componente de listagem com acoes (editar, bloquear, remover)
+- [x] Implementar acao de editar colaborador
+- [x] Implementar confirmacao para remocao
+- [x] Implementar modal de confirmacao para bloqueio
+- [x] Adicionar feedback visual (toast) para acoes
+
+### Integracao
+- [ ] Sincronizar usuarios MySQL com Firebase Firestore
+- [x] Validar permissoes de gestor (Firestore Rules)
+- [x] Criar testes Vitest para Firebase integration (7 testes passando)
+- [x] Testar fluxo completo de gestao
