@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm build",
+  "startCommand": "node dist/index.js",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "server/_core/index.ts": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
