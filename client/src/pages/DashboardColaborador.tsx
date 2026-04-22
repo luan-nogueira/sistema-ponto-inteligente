@@ -1,7 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -15,6 +14,7 @@ import Justificativas from "@/components/Justificativas";
 export default function DashboardColaborador() {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
   const [, setLocation] = useLocation();
   const logoutMutation = trpc.auth.logout.useMutation();
 
@@ -26,6 +26,16 @@ export default function DashboardColaborador() {
     } catch (error) {
       toast.error("Erro ao fazer logout");
     }
+  };
+
+  const handleNavClick = (tab: string) => {
+    setActiveTab(tab);
+    setSidebarOpen(false);
+  };
+
+  const handleQuickAction = (tipo: string) => {
+    setActiveTab("registro");
+    toast.info(`Clique em "Registrar Ponto" para registrar ${tipo}`);
   };
 
   return (
@@ -52,12 +62,42 @@ export default function DashboardColaborador() {
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-2">
-            <NavItem icon="📊" label="Dashboard" active />
-            <NavItem icon="📝" label="Registrar Ponto" />
-            <NavItem icon="📋" label="Histórico" />
-            <NavItem icon="📈" label="Resumo Mensal" />
-            <NavItem icon="✋" label="Justificativas" />
-            <NavItem icon="👤" label="Perfil" />
+            <NavItem 
+              icon="📊" 
+              label="Dashboard" 
+              active={activeTab === "overview"}
+              onClick={() => handleNavClick("overview")}
+            />
+            <NavItem 
+              icon="📝" 
+              label="Registrar Ponto"
+              active={activeTab === "registro"}
+              onClick={() => handleNavClick("registro")}
+            />
+            <NavItem 
+              icon="📋" 
+              label="Histórico"
+              active={activeTab === "historico"}
+              onClick={() => handleNavClick("historico")}
+            />
+            <NavItem 
+              icon="📈" 
+              label="Resumo Mensal"
+              active={activeTab === "resumo"}
+              onClick={() => handleNavClick("resumo")}
+            />
+            <NavItem 
+              icon="✋" 
+              label="Justificativas"
+              active={activeTab === "justificativas"}
+              onClick={() => handleNavClick("justificativas")}
+            />
+            <NavItem 
+              icon="👤" 
+              label="Perfil"
+              active={activeTab === "perfil"}
+              onClick={() => handleNavClick("perfil")}
+            />
           </nav>
 
           {/* Footer */}
@@ -70,7 +110,7 @@ export default function DashboardColaborador() {
                 {user?.name}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                {user?.cargo}
+                {user?.cargo || "Colaborador"}
               </p>
             </div>
             <Button
@@ -101,32 +141,16 @@ export default function DashboardColaborador() {
               )}
             </button>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              Dashboard
+              Meu Dashboard
             </h2>
           </div>
         </header>
 
         {/* Content */}
         <main className="flex-1 overflow-auto p-6">
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full max-w-md grid-cols-4">
-              <TabsTrigger value="overview">Visão Geral</TabsTrigger>
-              <TabsTrigger value="registro">Registrar</TabsTrigger>
-              <TabsTrigger value="historico">Histórico</TabsTrigger>
-              <TabsTrigger value="resumo">Resumo</TabsTrigger>
-            </TabsList>
-
-            {/* Justificativas Tab */}
-            <TabsList className="grid w-full max-w-md grid-cols-4 mt-2">
-              <TabsTrigger value="justificativas">Justificativas</TabsTrigger>
-            </TabsList>
-
-            {/* Overview Tab */}
-            <TabsContent value="justificativas" className="mt-6">
-              <Justificativas />
-            </TabsContent>
-
-            <TabsContent value="overview" className="space-y-6 mt-6">
+          {/* Overview Tab */}
+          {activeTab === "overview" && (
+            <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Card>
                   <CardHeader className="pb-3">
@@ -203,57 +227,111 @@ export default function DashboardColaborador() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <Button className="bg-green-600 hover:bg-green-700" onClick={() => {
-                      toast.info("Clique em 'Registrar' para fazer seu registro");
-                    }}>
+                    <Button 
+                      className="bg-green-600 hover:bg-green-700"
+                      onClick={() => handleQuickAction("entrada")}
+                    >
                       ✓ Entrada
                     </Button>
-                    <Button className="bg-orange-600 hover:bg-orange-700" onClick={() => {
-                      toast.info("Clique em 'Registrar' para fazer seu registro");
-                    }}>
+                    <Button 
+                      className="bg-orange-600 hover:bg-orange-700"
+                      onClick={() => handleQuickAction("intervalo")}
+                    >
                       ⏸ Intervalo
                     </Button>
-                    <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => {
-                      toast.info("Clique em 'Registrar' para fazer seu registro");
-                    }}>
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700"
+                      onClick={() => handleQuickAction("retorno")}
+                    >
                       ▶ Retorno
                     </Button>
-                    <Button className="bg-red-600 hover:bg-red-700" onClick={() => {
-                      toast.info("Clique em 'Registrar' para fazer seu registro");
-                    }}>
+                    <Button 
+                      className="bg-red-600 hover:bg-red-700"
+                      onClick={() => handleQuickAction("saída")}
+                    >
                       ✕ Saída
                     </Button>
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+            </div>
+          )}
 
-            {/* Registro Tab */}
-            <TabsContent value="registro" className="mt-6">
-              <RegistroPonto />
-            </TabsContent>
+          {/* Registro Tab */}
+          {activeTab === "registro" && (
+            <RegistroPonto />
+          )}
 
-            {/* Histórico Tab */}
-            <TabsContent value="historico" className="mt-6">
-              <HistoricoRegistros />
-            </TabsContent>
+          {/* Histórico Tab */}
+          {activeTab === "historico" && (
+            <HistoricoRegistros />
+          )}
 
-            {/* Resumo Tab */}
-            <TabsContent value="resumo" className="mt-6 space-y-6">
+          {/* Resumo Tab */}
+          {activeTab === "resumo" && (
+            <div className="space-y-6">
               <ResumoMensal />
               <Justificativas />
-            </TabsContent>
-          </Tabs>
+            </div>
+          )}
+
+          {/* Justificativas Tab */}
+          {activeTab === "justificativas" && (
+            <Justificativas />
+          )}
+
+          {/* Perfil Tab */}
+          {activeTab === "perfil" && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Meu Perfil</CardTitle>
+                <CardDescription>Informações do colaborador</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Nome</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">{user?.name}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Email</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">{user?.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Cargo</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">{user?.cargo || "Não definido"}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Setor</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">{user?.setor || "Não definido"}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Matrícula</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">{user?.numeroMatricula || "Não definida"}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </main>
       </div>
     </div>
   );
 }
 
-function NavItem({ icon, label, active = false }: { icon: string; label: string; active?: boolean }) {
+function NavItem({ 
+  icon, 
+  label, 
+  active = false,
+  onClick
+}: { 
+  icon: string; 
+  label: string; 
+  active?: boolean;
+  onClick?: () => void;
+}) {
   return (
     <button
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+      onClick={onClick}
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer ${
         active
           ? "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 font-semibold"
           : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
